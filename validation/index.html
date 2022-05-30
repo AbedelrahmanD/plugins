@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validator</title>
+    <script src="validator.min.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #eee;
+        }
+
+        .container {
+            background-color: white;
+            box-shadow: 1px 1px 5px grey;
+            padding: 10px;
+            margin: 10px auto;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            max-width: 700px;
+
+        }
+
+        input {
+            border: 1px solid rgb(151, 146, 146);
+            border-radius: 5px;
+            padding: 5px;
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        <a target="blank" href="https://github.com/validatorjs/validator.js">
+            Validator.js
+        </a>
+    </h1>
+
+
+    <div class="container">
+        validator.isNumeric(123);
+        <input type="text" placeholder="enter a number" onchange="alert(validator.isNumeric(this.value))">
+    </div>
+    <div class="container">
+        validator.isEmail("example@gmail.com");
+        <input type="text" placeholder="enter email" onchange="alert(validator.isEmail(this.value))">
+    </div>
+    <div class="container">
+        validator.isStrongPassword("Aa1@qwer");
+        <input type="text" placeholder="enter password" onchange="alert(validator.isStrongPassword(this.value))">
+    </div>
+
+    <div class="container">
+        validator.isDate("2022/03/05");
+        <input type="text" placeholder="enter date" onchange="alert(validator.isDate(this.value))">
+    </div>
+
+    <div class="container">
+        validator.isURL("https://github.com/validatorjs/validator.js");
+        <input type="text" placeholder="enter url" onchange="alert(validator.isURL(this.value))">
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- splide.min.css required -->
+    <link rel="stylesheet" href="splide.min.css">
+    <!--splide.min.js required-->
+    <script src="splide.min.js"></script>
+    <style>
+        body {
+            padding: 0;
+            font-family: sans-serif;
+            /* direction: rtl; */
+        }
+
+        .splide__slide {
+            background-color: red;
+            height: 500px;
+        }
+
+        .splide__slide:nth-of-type(1) {
+            background-color: purple;
+        }
+
+        .splide__slide:nth-of-type(2) {
+            background-color: grey;
+        }
+
+        h1 {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        <a target="_blank" href="https://splidejs.com/guides/options/">
+            Splide js
+        </a>
+        , Auto play, Rtl, Swipe
+    </h1>
+    <hr>
+    <h1>
+        Full screen
+    </h1>
+    <section class="splide splide1" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">Slide 01</li>
+                <li class="splide__slide">Slide 02</li>
+                <li class="splide__slide">Slide 03</li>
+            </ul>
+        </div>
+    </section>
+
+    <h1>
+        Multiple per page
+    </h1>
+
+    <section class="splide splide2" aria-label="Splide Basic HTML Example">
+        <div class="splide__track">
+            <ul class="splide__list">
+                <li class="splide__slide">Slide 01</li>
+                <li class="splide__slide">Slide 02</li>
+                <li class="splide__slide">Slide 03</li>
+                <li class="splide__slide">Slide 04</li>
+                <li class="splide__slide">Slide 05</li>
+                <li class="splide__slide">Slide 06</li>
+            </ul>
+        </div>
+    </section>
+    <script>
+        new Splide('.splide1', {
+            // direction: 'rtl',
+            type: 'slide',//loop,fade,slide
+            rewind: true,
+            perPage: 1,
+            gap: '1rem',
+            autoplay: true,
+        }).mount();
+
+        new Splide('.splide2', {
+            type: 'slide',//loop,fade,slide
+            rewind: true,
+            perPage: 3,
+            gap: '1rem',
+            autoplay: true,
+        }).mount();
+    </script>
+</body>
+
+</html>
