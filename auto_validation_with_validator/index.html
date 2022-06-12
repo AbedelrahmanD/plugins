@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto validation with validator</title>
+    <style>
+        .jsInvalidInput {
+            border: 1px solid #f93154;
+        }
+
+        .jsInvalidMessage {
+            color: red;
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin: auto;
+            border-radius: 8px;
+            box-shadow: 1px 1px 5px grey;
+            padding: 10px;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgb(206, 194, 194);
+            margin: 10px 0;
+            background-color: white;
+        }
+
+        div {
+            border-radius: 8px;
+        }
+
+        button {
+            padding: 0.5rem 1.5rem;
+            background-color: #f93154;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <form id="form">
+        <div>
+            <label>Text</label>
+            <input data-type="text" data-type-message="required" type="text">
+        </div>
+        <div>
+            <label>Text2</label>
+            <input data-type="text" data-type-message="required" type="text">
+        </div>
+        <div>
+            <label>email</label>
+            <input data-type="email" data-type-message="email format" type="text">
+        </div>
+        <div>
+            <label>number</label>
+            <input data-type="number" data-type-message="number format" type="text">
+        </div>
+        <div>
+            <label>phone</label>
+            <input data-type="phone" data-type-message="phone format" type="text">
+        </div>
+        <div>
+            <label>select</label>
+            <select data-type="text" data-type-message="select required">
+                <option value=""></option>
+                <option value="1">one</option>
+            </select>
+        </div>
+        <div>
+            <label>checkbox</label>
+            <input data-type="checkbox" data-type-message="check" type="checkbox">
+        </div>
+
+        <div style="display:flex;align-items: center;">
+            <label>radio</label>
+            <div data-type="radio" data-type-message="radio">
+                <input type="radio" name="nb" value="one">one
+                <input type="radio" name="nb" value="two">two
+            </div>
+
+        </div>
+        <div>
+            <label>file</label>
+            <input data-type="text" data-type-message="file" type="file">
+        </div>
+        <button id="jsSubmit">submit</button>
+    </form>
+
+
+    <script src="validator.min.js"></script>
+    <script>
+        var formRules = {
+            text: function (value) {
+                return value.trim() != "";
+            },
+            email: function (value) {
+                return validator.isEmail(value);
+            },
+            number: function (value) {
+                return validator.isNumeric(value);
+            },
+            phone: function (value) {
+                return validator.isNumeric(value);
+            },
+            checkbox: function (value) {
+                return value == 1;
+            },
+            radio: function (value) {
+                return value == 1;
+            }
+        };
+
+
+        function changeCheckboxsValue(form = "*") {
+            document.querySelectorAll(`${form} [type=checkbox]`).forEach(checkbox => {
+                if (checkbox.checked) {
+                    checkbox.value = 1;
+                } else {
+                    checkbox.value = 0;
+                }
+
+            });
+        }
+        function removeInvalidMessages(form = "*") {
+            document.querySelectorAll(`${form} .jsInvalidMessage`).forEach(message => {
+                message.remove();
+            });
+
+        }
+        function isValidForm(form) {
+            changeCheckboxsValue(form);
+            removeInvalidMessages(form);
+            var isValid = true;
+            var requiredInputs = document.querySelectorAll(`${form} [data-type]`);
+            requiredInputs.forEach(input => {
+                input.classList.remove("jsInvalidInput");
+                var type = input.getAttribute("data-type");
+                var value = input.value;
+                if (type == "radio") {
+                    input.childNodes.forEach(radio => {
+                        if (radio.checked) {
+                            value = 1;
+                        }
+                    })
+                }
+                if (!formRules[type](value)) {
+                    isValid = false;
+                    var message = input.getAttribute("data-type-message");
+                    var spanMessage = document.createElement("span");
+                    spanMessage.textContent = message;
+                    spanMessage.classList.add("jsInvalidMessage");
+                    input.parentNode.append(spanMessage);
+                    input.classList.add("jsInvalidInput");
+                }
+
+            });
+            return isValid;
+        }
+
+    </script>
+
+
+    <script>
+
+        document.querySelector("#jsSubmit").addEventListener("click", function (e) {
+            e.preventDefault();
+            var result = isValidForm("#form");
+            console.log(result);
+        });
+    </script>
+</body>
+
+</html>
